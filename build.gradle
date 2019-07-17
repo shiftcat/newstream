@@ -1,0 +1,88 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+//    dependencies {
+//        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+//    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'scala'
+apply plugin: 'idea'
+//apply plugin: 'com.github.johnrengelman.shadow'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group 'com.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+//configurations {
+//    provided
+//    compile.extendsFrom provided
+//}
+
+//jar {
+//    dependsOn configurations.runtime
+//    from {
+//        zip64 true
+//        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+//    }
+//}
+
+
+sourceSets {
+    main {
+        scala {
+            srcDirs = ['src/main/scala']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+    test {
+        scala {
+            srcDirs = ['src/test/scala']
+        }
+        resources {
+            srcDirs = ['src/test/resources']
+        }
+    }
+}
+
+
+dependencies {
+
+    def sparkVersion = "2.4.0"
+    def scalaVersion = "2.11"
+
+    compile 'org.scala-lang:scala-library:2.11'
+
+    compile "org.apache.spark:spark-core_${scalaVersion}:${sparkVersion}"
+    compile "org.apache.spark:spark-sql_${scalaVersion}:${sparkVersion}"
+    compile "org.apache.spark:spark-mllib_${scalaVersion}:${sparkVersion}"
+
+    compile "org.mongodb.spark:mongo-spark-connector_${scalaVersion}:${sparkVersion}"
+    compile "org.mongodb.scala:mongo-scala-driver_${scalaVersion}:${sparkVersion}"
+
+    compile "org.apache.spark:spark-sql-kafka-0-10_${scalaVersion}:${sparkVersion}"
+    compile "org.apache.spark:spark-streaming-kafka-0-10_${scalaVersion}:${sparkVersion}"
+
+
+    compile 'com.github.uosdmlab:spark-nkp_2.11:0.3.3'
+
+    compile group: 'com.redislabs', name: 'spark-redis', version: "${sparkVersion}"
+    compile "redis.clients:jedis:3.0.1"
+
+
+    //compile "org.deeplearning4j:dl4j-spark-parameterserver_${scalaVersion}:${sparkVersion}"
+    // compile "org.deeplearning4j:dl4j-spark_${scalaVersion}:0.9.1_spark_2"
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
