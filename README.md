@@ -103,3 +103,13 @@ docker run \
 mongo:4.1.13
 
 ```
+
+
+![](images/cluster_apps.png)
+
+![](images/TokenizeDFStream-Executors.png)
+
+![](images/TokenizeDFStream-SQL.png)
+
+![](images/TokenizeDFStream-Details.png)
+
