@@ -8,7 +8,7 @@ buildscript {
 }
 
 
-apply plugin: 'java'
+//apply plugin: 'java'
 apply plugin: 'scala'
 apply plugin: 'idea'
 //apply plugin: 'com.github.johnrengelman.shadow'
@@ -62,23 +62,23 @@ dependencies {
     def sparkVersion = "2.4.0"
     def scalaVersion = "2.11"
 
-    compile 'org.scala-lang:scala-library:2.11'
+    compileOnly 'org.scala-lang:scala-library:2.11'
 
-    compile "org.apache.spark:spark-core_${scalaVersion}:${sparkVersion}"
-    compile "org.apache.spark:spark-sql_${scalaVersion}:${sparkVersion}"
-    compile "org.apache.spark:spark-mllib_${scalaVersion}:${sparkVersion}"
+    compileOnly "org.apache.spark:spark-core_${scalaVersion}:${sparkVersion}"
+    compileOnly "org.apache.spark:spark-sql_${scalaVersion}:${sparkVersion}"
+    compileOnly "org.apache.spark:spark-mllib_${scalaVersion}:${sparkVersion}"
 
-    compile "org.mongodb.spark:mongo-spark-connector_${scalaVersion}:${sparkVersion}"
-    compile "org.mongodb.scala:mongo-scala-driver_${scalaVersion}:${sparkVersion}"
+    implementation "org.mongodb.spark:mongo-spark-connector_${scalaVersion}:${sparkVersion}"
+    implementation "org.mongodb.scala:mongo-scala-driver_${scalaVersion}:${sparkVersion}"
 
-    compile "org.apache.spark:spark-sql-kafka-0-10_${scalaVersion}:${sparkVersion}"
-    compile "org.apache.spark:spark-streaming-kafka-0-10_${scalaVersion}:${sparkVersion}"
+    implementation "org.apache.spark:spark-sql-kafka-0-10_${scalaVersion}:${sparkVersion}"
+    implementation "org.apache.spark:spark-streaming-kafka-0-10_${scalaVersion}:${sparkVersion}"
 
 
-    compile 'com.github.uosdmlab:spark-nkp_2.11:0.3.3'
+    implementation 'com.github.uosdmlab:spark-nkp_2.11:0.3.3'
 
-    compile group: 'com.redislabs', name: 'spark-redis', version: "${sparkVersion}"
-    compile "redis.clients:jedis:3.0.1"
+    implementation group: 'com.redislabs', name: 'spark-redis', version: "${sparkVersion}"
+    implementation "redis.clients:jedis:3.0.1"
 
 
     //compile "org.deeplearning4j:dl4j-spark-parameterserver_${scalaVersion}:${sparkVersion}"
