@@ -82,3 +82,24 @@ org.mongodb.spark:mongo-spark-connector_2.11:2.4.0,\
 redis.clients:jedis:3.0.1 \
 --class com.example.stream.TokenizeDFStream build/libs/newsteam-1.0-SNAPSHOT.jar
 ```
+
+
+## Docker 
+
+```bash
+docker run \
+--name redis \
+-d \
+-v ${HOME}/data/crawl/redis:/data \
+-p 6379:6379 \
+redis redis-server --appendonly yes
+
+
+docker run \
+--name=crawldb \
+-d \
+-p 27017:27017 \
+-v ${HOME}/data/crawl/mongo:/data/db \
+mongo:4.1.13
+
+```
