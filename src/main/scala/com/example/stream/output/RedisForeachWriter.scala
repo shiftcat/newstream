@@ -44,7 +44,7 @@ object RedisForeachWriter {
     df.writeStream
       .trigger(Trigger.ProcessingTime(s"${Config.trigger} seconds"))
       .outputMode("append")
-      .foreach(new RedisForeachWriter("localhost", 6379))
+      .foreach(new RedisForeachWriter(Config.redisHost, Config.redisPort))
       .start()
   }
 

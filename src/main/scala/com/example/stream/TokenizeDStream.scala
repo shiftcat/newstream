@@ -19,10 +19,10 @@ object TokenizeDStream extends App {
 
   val conf = new SparkConf()
     .setAppName("TokenizeDStream")
-    .setMaster("local")
-    .set("spark.mongodb.output.uri", "mongodb://localhost:27017")
-    .set("spark.mongodb.output.database", "crawl")
-    .set("spark.mongodb.output.collection", "tokenize")
+//    .setMaster("local")
+    .set("spark.mongodb.output.uri", Config.mongoUrl)
+    .set("spark.mongodb.output.database", Config.mongoDatabase)
+    .set("spark.mongodb.output.collection", Config.mongoCollecition)
 
   val ssc = new StreamingContext(conf, Seconds(Config.trigger))
 

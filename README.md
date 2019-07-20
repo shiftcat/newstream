@@ -58,3 +58,27 @@ redis.clients:jedis:3.0.1 \
 --class com.example.stream.TokenizeDFStream build/libs/newsteam-1.0-SNAPSHOT.jar
 
 ```
+
+
+## Run (yarn)
+
+```bash
+spark-submit \
+--master yarn \
+--deploy-mode cluster \
+--packages org.apache.spark:spark-streaming-kafka-0-10_2.11:2.4.0,\
+com.github.uosdmlab:spark-nkp_2.11:0.3.3,\
+org.mongodb.spark:mongo-spark-connector_2.11:2.4.0,\
+redis.clients:jedis:3.0.1 \
+--class com.example.stream.TokenizeDStream build/libs/newsteam-1.0-SNAPSHOT.jar
+
+
+spark-submit \
+--master yarn \
+--deploy-mode cluster \
+--packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.0,\
+com.github.uosdmlab:spark-nkp_2.11:0.3.3,\
+org.mongodb.spark:mongo-spark-connector_2.11:2.4.0,\
+redis.clients:jedis:3.0.1 \
+--class com.example.stream.TokenizeDFStream build/libs/newsteam-1.0-SNAPSHOT.jar
+```

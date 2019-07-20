@@ -19,7 +19,7 @@ private class MongoForeachWriter1 extends ForeachWriter[Row] {
   import com.mongodb.spark.config.WriteConfig
   import org.bson.BsonDocument
 
-  val writeConfig: WriteConfig = WriteConfig(Map("uri" -> "mongodb://127.0.0.1", "database" -> "crawl", "collection" -> "tokenize"))
+  val writeConfig: WriteConfig = WriteConfig(Map("uri" -> Config.mongoUrl, "database" -> Config.mongoDatabase, "collection" -> Config.mongoCollecition))
   var mongoConnector: MongoConnector = _
 
   override def open(partitionId: Long, epochId: Long): Boolean = {
@@ -70,9 +70,9 @@ private class MongoForeachWriter2 extends ForeachWriter[Row] {
       Macros.createCodecProvider[WordCount]()
     ), DEFAULT_CODEC_REGISTRY)
 
-    mongoClient = MongoClient("mongodb://localhost:27017")
-    database = mongoClient.getDatabase("crawl").withCodecRegistry(codecRegistry)
-    collection = database.getCollection[ArticleTokenizeDBType]("tokenize")
+    mongoClient = MongoClient(Config.mongoUrl)
+    database = mongoClient.getDatabase(Config.mongoDatabase).withCodecRegistry(codecRegistry)
+    collection = database.getCollection[ArticleTokenizeDBType](Config.mongoCollecition)
 
     true
   }
@@ -140,15 +140,15 @@ private class MongoForeachWriter3(conf: SparkConf) extends ForeachWriter[Row] {
     if (buffer.nonEmpty) {
       val spark = SparkSession.builder()
         .config(conf)
-        .config("spark.mongodb.output.uri", "mongodb://localhost:27017")
-        .config("spark.mongodb.output.database", "crawl")
-        .config("spark.mongodb.output.collection", "tokenize")
+        .config("spark.mongodb.output.uri", Config.mongoUrl)
+        .config("spark.mongodb.output.database", Config.mongoDatabase)
+        .config("spark.mongodb.output.collection", Config.mongoCollecition)
         .getOrCreate()
       val rdd = spark.sparkContext.parallelize(buffer.toList)
       val df = spark.createDataFrame(rdd)
 
       if (!df.isEmpty) {
-        val writeConfig = WriteConfig(Map("uri" -> "mongodb://127.0.0.1", "database" -> "crawl", "collection" -> "tokenize"), Some(WriteConfig(spark)))
+        val writeConfig = WriteConfig(Map("uri" -> Config.mongoUrl, "database" -> Config.mongoDatabase, "collection" -> Config.mongoCollecition))
         MongoSpark.save(df, writeConfig)
       }
     }
